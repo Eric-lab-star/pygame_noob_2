@@ -41,5 +41,6 @@ class Player(pygame.sprite.Sprite):
             self.velocity.normalize_ip()
 
         self.rect.center += self.velocity * Player.speed * dt
+        self.rect.clamp_ip(pygame.Rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT))
 
         self.handleMissile()

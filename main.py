@@ -1,28 +1,15 @@
 import pygame
 
-#
-from entity.hud import HUD
 from settings import (
-    WINDOW_WIDTH,
-    WINDOW_HEIGHT,
     all_sprite_group,
     meteor_sprite_group,
     missile_sprite_group,
+    display_surface,
 )
 from entity.bg import Background
-
-pygame.init()
-
-display_surface = pygame.display.set_mode(
-    (WINDOW_WIDTH, WINDOW_HEIGHT),
-)
-
 from entity.player import Player
 from entity.meteor import Meteor
-
-
-pygame.display.set_caption("space shooter")
-
+from entity.hud import Hud
 
 clock = pygame.time.Clock()
 
@@ -33,7 +20,7 @@ def main():
     direction = pygame.Vector2(0, 0)
     bg = Background()
     player = Player()
-    hud = HUD()  # <--- 추가
+    hud = Hud()  # <--- 추가
     meteor_event = pygame.event.custom_type()
     if not game_over:
         pygame.time.set_timer(meteor_event, 400)
