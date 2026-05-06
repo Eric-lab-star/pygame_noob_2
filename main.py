@@ -19,8 +19,8 @@ def main():
     game_over = False
     direction = pygame.Vector2(0, 0)
     bg = Background()
+    hud = Hud()
     player = Player()
-    hud = Hud()  # <--- 추가
     meteor_event = pygame.event.custom_type()
     if not game_over:
         pygame.time.set_timer(meteor_event, 400)
@@ -44,10 +44,12 @@ def main():
             all_sprite_group.update(dt)
             if pygame.sprite.spritecollide(player, meteor_sprite_group, False):
                 game_over = True
-
             all_sprite_group.draw(display_surface)
         else:
             display_surface.blit(bg.image)
+            hud.show("Game Over")
+            display_surface.blit(hud.image, hud.rect)
+
             player.kill()
             meteor_sprite_group.empty()
 
