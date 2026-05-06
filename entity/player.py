@@ -1,19 +1,36 @@
 import pygame
 from os.path import join
-from settings import WINDOW_WIDTH, WINDOW_HEIGHT
+from entity.missile import Missile
+from settings import WINDOW_WIDTH, WINDOW_HEIGHT, all_sprite_group
 
 
 class Player(pygame.sprite.Sprite):
     path: str = join("images", "player.png")
-    speed: float = 100
+    speed: float = 300
     velocity: pygame.Vector2 = pygame.Vector2(0, 0)
+    missile_cooldown: float = 200
+    missile_timer: float = 0
 
-    def __init__(self, group: pygame.sprite.Group):
-        super().__init__(group)
+    # 수정하기 ─────┐
+    def __init__(self):
+        #       수정하기 ─────┐
+        super().__init__(all_sprite_group)
         self.image = pygame.image.load(Player.path).convert_alpha()
         self.rect: pygame.FRect = self.image.get_frect(
             center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
         )
+
+    def spawn_missile(self):
+        keys = pygame.key.get_just_pressed()
+        if keys[pygame.K_SPACE]:
+            # 수정하기 ─────┐
+            Missile(pygame.Vector2(self.rect.midtop))
+            Player.missile_timer = pygame.time.get_ticks()
+
+    def handleMissile(self):
+        current_time = pygame.time.get_ticks()
+        if current_time - Player.missile_timer > Player.missile_cooldown:
+            self.spawn_missile()
 
     def update(self, dt: float):
         keys = pygame.key.get_pressed()
@@ -24,3 +41,5 @@ class Player(pygame.sprite.Sprite):
             self.velocity.normalize_ip()
 
         self.rect.center += self.velocity * Player.speed * dt
+
+        self.handleMissile()

@@ -1,14 +1,14 @@
 import pygame
 from os.path import join
-from settings import WINDOW_WIDTH, WINDOW_HEIGHT
+from settings import WINDOW_WIDTH, WINDOW_HEIGHT, all_sprite_group
 
 
 class Background(pygame.sprite.Sprite):
     path: str = join("images", "background.png")
 
-    def __init__(self, group: pygame.sprite.Group):
-        super().__init__(group)
-        self.image = pygame.transform.scale(
+    def __init__(self):
+        super().__init__(all_sprite_group)
+        self.image: pygame.Surface = pygame.transform.scale(
             pygame.image.load(Background.path).convert_alpha(),
             (WINDOW_WIDTH, WINDOW_HEIGHT),
         )
