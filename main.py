@@ -39,7 +39,6 @@ def main():
             meteor_sprite_group, missile_sprite_group, True, True
         )
 
-        #   ┌───── 추가하기
         if not game_over:
             all_sprite_group.update(dt)
             if pygame.sprite.spritecollide(player, meteor_sprite_group, False):
@@ -47,7 +46,9 @@ def main():
             all_sprite_group.draw(display_surface)
         else:
             display_surface.blit(bg.image)
-            hud.show("Game Over")
+            #   ┌───── 추가하기
+            hud.draw("Game Over")
+            #   ┌───── 추가하기
             display_surface.blit(hud.image, hud.rect)
 
             player.kill()
