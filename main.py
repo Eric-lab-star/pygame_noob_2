@@ -30,8 +30,17 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == meteor_event:
+            #   ┌─ 추가하기
+            elif event.type == meteor_event:
                 Meteor.spawn(3)
+            #   ┌─ 추가하기
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                if game_over:
+                    all_sprite_group.add(bg)
+                    player.reset()
+                    hud.kill()
+                    game_over = False
+
         if direction.length() > 0:
             direction.normalize_ip()
 
@@ -44,15 +53,15 @@ def main():
             if pygame.sprite.spritecollide(player, meteor_sprite_group, False):
                 game_over = True
             all_sprite_group.draw(display_surface)
-        else:
-            display_surface.blit(bg.image)
-            #   ┌───── 추가하기
-            hud.draw("Game Over")
-            #   ┌───── 추가하기
-            display_surface.blit(hud.image, hud.rect)
 
-            player.kill()
+        else:
+            #   ┌─ 추가하기
+            all_sprite_group.empty()
             meteor_sprite_group.empty()
+            missile_sprite_group.empty()
+            display_surface.blit(bg.image)
+            hud.draw("Game Over")
+            display_surface.blit(hud.image, hud.rect)
 
         pygame.display.flip()
     pygame.quit()

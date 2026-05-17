@@ -4,28 +4,27 @@ from settings import (
     WINDOW_HEIGHT,
     WINDOW_WIDTH,
 )
+from os.path import join
 
 
 class Hud(pygame.sprite.Sprite):
-    font = pygame.font.Font(size=100)
+    #   ┌─ 추가하기
+    font_path = join("images", "Galmuri9.ttf")
+    #                           ┌─ 추가하기
+    font = pygame.font.Font(font_path, size=100)
 
-    #                       ┌─ 추가하기
     def __init__(self, msg=""):
         super().__init__(all_sprite_group)
-        #                                       ┌─ 추가하기
         self.image: pygame.Surface = Hud.font.render(msg, True, "white")
         self.rect: pygame.FRect = self.image.get_frect(
             center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
         )
 
-    #                   ┌─ 추가하기
     def draw(self, msg: str):
-        #                                         ┌─ 추가하기
         self.image: pygame.Surface = Hud.font.render(msg, True, "white")
         self.rect: pygame.FRect = self.image.get_frect(
             center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
         )
 
     def update(self, dt: float):
-
         pass
